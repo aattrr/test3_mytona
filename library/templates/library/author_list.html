@@ -1,0 +1,68 @@
+{% extends 'test3_mytona/index.html' %}
+{% load static %}
+{% block content %}
+<br><br><br><br>
+<h4 align="center">Авторы</h4>
+<div class="service-section space__bottom--r120">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="service-item-wrapper space__bottom--m40">
+                    <div class="service-grid-item">
+                        <div class="service-grid-item__content">
+                            {% for i in page_obj %}
+                            <h3 class="title">
+                                <a href="{{ i.get_absolute_url }}">{{ i.first_name }} {{ i.second_name }}</a>
+                            </h3><br>
+                            {% if request.user.is_authenticated %}
+                                <p align="right">
+                                    <a href="{% url "update_author" i.id %}" class="default-btn">Редактировать автора</a><br>
+                                </p>
+                                <div style="text-align:right">
+                                    <form method="POST" action="{% url 'delete_author' i.id %}">
+                                        {% csrf_token %}
+                                        <input type="submit" class="default-btn" name="inputsubmit1" value="&nbsp; Удалить автора &nbsp; " />
+                                    </form>
+                                </div>
+                            {% endif %}
+                            <hr>
+                            {% empty %}
+                                <h3>Книги отсутствуют</h3>
+                            {% endfor %}
+                            {% if request.user.is_authenticated %}
+                                <a href="{% url "create_author" %}" class="default-btn">Добавить автора</a><br><br>
+                            {% endif %}
+                            <div class="row ">
+                                <div class="col">
+                                    <ul class="page-pagination space__top--30">
+                                    {% if page_obj.has_previous %}
+                                        <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-angle-left"></i>Назад</a></li>
+                                    {% else %}
+                                        <li class="page-item disabled"><a href=""><i class="fa fa-angle-left"></i> Назад</a></li>
+                                    {% endif %}
+
+                                    {% for i in page_obj.paginator.page_range %}
+
+                                        {% if i != page_obj.number %}
+                                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                        {% else %}
+                                        <li class="active"><a href="#"><span>{{ i }}</span></a></li>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% if page_obj.has_next %}
+                                        <li><a href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-right"></i>Следующая</a></li>
+                                    {% else %}
+                                        <li class="page-item disabled"><a href=""><i class="fa fa-angle-right"></i>Следующая</a></li>
+                                    {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

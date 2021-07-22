@@ -1,0 +1,40 @@
+{% extends 'test3_mytona/index.html' %}
+{% load static %}
+{% block content %}
+{% load i18n %}
+<br><br><br>
+<h4 align="center">Редактировать автора</h4>
+{% if request.user.is_authenticated %}
+
+    <!--====================  login area ====================-->
+    <div class="login-area space__bottom--r120">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 space__top__md--40 space__top__lm--40">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="login-form">
+                            <div class="row">
+                                <div class="col-md-4 col-4 space__bottom--20">
+                                    <label>Имя автора</label>
+                                    {{ form.first_name}}
+                                </div>
+                                <div class="col-md-12 col-12 space__bottom--20">
+                                    <label>Фамилия</label>
+                                    {{ form.second_name }}
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="default-btn">Сохранить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of login area  ====================-->
+{% else %}
+    <h6>{% trans 'You are not logged in, log in to change the news' %}</h6>
+{% endif %}
+{% endblock content %}

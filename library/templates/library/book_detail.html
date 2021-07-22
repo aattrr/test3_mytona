@@ -1,0 +1,43 @@
+{% extends 'test3_mytona/index.html' %}
+{% load static %}
+{% block content %}
+<br><br><br>
+<h4 align="center">{{ object.title}}</h4>
+<br>
+    <!--====================  service details ====================-->
+    <div class="service-section space__bottom--r120">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-12 order-1 order-lg-2">
+                    <div class="service-details">
+                        <div class="content space__top--30">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p>{{ object.description }}</p>
+                                        <i>Авторы:  <br>
+                                            {% for tag in object.author.all %}
+                                                {{ tag.first_name }} {{ tag.second_name }}<br>
+                                            {% endfor %}
+                                        </i>
+                                        {% if request.user.is_authenticated %}
+                                            <p align="right">
+                                                <a href="{% url  'update_book' object.id %}" class="default-btn">Редактировать</a>
+                                            </p>
+                                            <div style="text-align:right">
+                                            <form method="POST" action="{% url 'delete_book' object.id %}">
+                                                {% csrf_token %}
+                                                <input type="submit" class="default-btn" name="inputsubmit1" value="&nbsp; Удалить &nbsp; " />
+                                            </form>
+                                            </div>
+                                        {% endif %}
+                                        <hr>
+                                    <a href="{% url 'book_list' %}" class="default-btn">Назад</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

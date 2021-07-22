@@ -1,0 +1,66 @@
+{% extends 'test3_mytona/index.html' %}
+{% load static %}
+{% block content %}
+<br><br><br><br>
+<h4 align="center">Книги</h4>
+<div class="service-section space__bottom--r120">
+    <div class="container">
+        <div class="row">
+            <div class="sidebar">
+                <div class="sidebar-search">
+                    <form action="{% url 'search_results' %}" method="get">
+                        <input type="text" name="descriptor" placeholder="Найти">
+                        <button><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="service-item-wrapper space__bottom--m40">
+                    <div class="service-grid-item">
+                        <div class="service-grid-item__content">
+                            {% for i in page_obj %}
+                                <h3 class="title">
+                                    <a href="{{ i.get_absolute_url }}">{{ i.title }}</a>
+                                </h3>
+                                <p class="subtitle">{{ i.description|truncatewords:100 }}</p>
+                                <hr>
+                            {% empty %}
+                                <h3>Нет книги</h3>
+                            {% endfor %}
+                            {% if request.user.is_authenticated %}
+                                <a href="{% url "create_book" %}" class="default-btn">Добавить книгу</a><br><br>
+                                <a href="{% url "create_author" %}" class="default-btn">Добавить автора</a><br><br>
+                            {% endif %}
+                            <div class="row ">
+                                <div class="col">
+                                    <ul class="page-pagination space__top--30">
+                                        {% if page_obj.has_previous %}
+                                            <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-angle-left"></i>Назад</a></li>
+                                        {% else %}
+                                            <li class="page-item disabled"><a href=""><i class="fa fa-angle-left"></i> Назад</a></li>
+                                        {% endif %}
+
+                                        {% for i in page_obj.paginator.page_range %}
+                                            {% if i != page_obj.number %}
+                                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                            {% else %}
+                                            <li class="active"><a href="#"><span>{{ i }}</span></a></li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% if page_obj.has_next %}
+                                            <li><a href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-right"></i>Следующая</a></li>
+                                        {% else %}
+                                            <li class="page-item disabled"><a href=""><i class="fa fa-angle-right"></i>Следующая</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

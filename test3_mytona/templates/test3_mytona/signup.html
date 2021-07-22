@@ -1,0 +1,55 @@
+{% extends 'test3_mytona/index.html' %}
+{% block content %}
+<br><br><br>
+    <h4 align="center">Регистрация</h4>
+
+
+<!--====================  login area ====================-->
+    <div class="login-area space__bottom--r120">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 space__top__md--40 space__top__lm--40">
+{##}
+{#<form method="post">#}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}<br>#}
+{#        <button type="submit">&nbsp; Зарегистрироваться &nbsp; </button>#}
+{#    </form>#}
+                    <form enctype="multipart/form-data" method="post" action="{% url 'signup' %}">
+                        {% csrf_token %}
+                        <div class="login-form">
+                            <h4 class="login-title"></h4>
+                            <div class="row">
+                                <div class="col-md-6 col-12 space__bottom--20">
+                                    {{ form.username.label }}
+                                    {{ form.username }}
+                                </div>
+                                <div class="col-md-6 col-12 space__bottom--20">
+                                    {{ form.email.label }}
+                                    {{ form.email }}
+                                </div>
+                                <div class="col-md-6 col-12 space__bottom--20">
+                                    {{ form.first_name.label }}
+                                    {{ form.first_name }}
+                                </div>
+                                <div class="col-md-6 space__bottom--20">
+                                    {{ form.password1.label }}
+                                    {{ form.password1 }}
+                                </div>
+                                <div class="col-md-6 space__bottom--20">
+                                    {{ form.password2.label }}
+                                    {{ form.password2 }}
+                                </div>
+                                <div class="col-12">
+                                <button type="submit" class="default-btn" >Отправить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of login area  ====================-->
+
+{% endblock content %}

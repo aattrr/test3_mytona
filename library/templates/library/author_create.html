@@ -1,0 +1,34 @@
+{% extends 'test3_mytona/index.html' %}
+{% load static %}
+{% block content %}
+<br><br><br>
+<h4 align="center">Добавить автора</h4>
+<br><br>
+    <!--====================  login area ====================-->
+    <div class="login-area space__bottom--r120">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 space__top__md--40 space__top__lm--40">
+                    <form method="post" action="{% url 'create_author' %}">
+                        {% csrf_token %}
+                        <div class="col-md-6 space__bottom--20">
+                            <label>Имя автора</label>
+                            {{ form.first_name}}
+                        </div>
+                        <div class="col-md-6 space__bottom--20">
+                            <label>Фамилия автора</label>
+                            {{ form.second_name}}
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="default-btn" >Сохранить</button>
+                        </div><br>
+                    </form>
+                    <div class="col-12">
+                        <a href="{% url 'book_list' %}" class="default-btn">Назад</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of login area  ====================-->
+{% endblock content %}

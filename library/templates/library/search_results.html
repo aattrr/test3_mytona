@@ -1,0 +1,13 @@
+{% extends 'test3_mytona/index.html' %}
+{% load static %}
+{% block content %}
+{% load i18n %}
+<br><br><br>
+<h4 align="center">Результаты поиска</h4>
+    {% for item in object_list %}
+        <h4 class="title">
+            <a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h4>
+            <p class="subtitle">{{ item.description|truncatewords:100 }}</p>
+            <hr>
+    {% endfor %}
+{% endblock content %}
